@@ -1,13 +1,23 @@
 To compile: 
 
-In this directory, run:
-
-$ g++ -o hw5 src/*.cpp -I /srv/conda/envs/notebook/include -Iinclude -larmadillo
+In this directory, on the login node, run:
+$ module swap PrgEnv-intel PrgEnv-gnu
+$ export PATH=$PATH:/global/homes/c/cmhuang/packages/include/
+$ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/global/homes/c/cmhuang/packages/lib64/
+$ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/intel/compilers_and_libraries_2020.2.254/linux/mkl/lib/intel64/
+$ g++ -o hw5 src/*.cpp -I/global/homes/c/cmhuang/packages/include/ -L/opt/intel/compilers_and_libraries_2020.2.254/linux/mkl/lib/intel64/ -L/global/homes/c/cmhuang/packages/lib64 -Iinclude -larmadillo -llapack -lblas -fopenmp
 
 To run:
 
-$ ./hw5 <filename>
+request an interactive node: 
 
-I.e. to pass in ./input/HF+.txt, run 
+salloc -N 1 -C knl -q interactive -t 02:00:00
 
-$ ./hw5 ./input/HF+.txt
+to run on 68 threads:
+
+$ export OMP_NUM_THREADS=68
+$ export OMP_PLACES=cores
+$ export OMP_PROC_BIND=spread
+
+#run the application:
+$ srun -n 1 -c 68 --cpu_bind=cores ./hw5 ./input/HF+.txt
