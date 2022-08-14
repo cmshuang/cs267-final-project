@@ -1,6 +1,7 @@
 #include "SCFFunctions.h"
 #include <armadillo>
 #include <iomanip>
+#include <chrono>
 
 void BasisFunction::calculate_normalizations() {
     /* Compute normalization constants for the basis function
@@ -34,7 +35,7 @@ void Molecule::calculate_overlap_matrix() {
     /* Compute overlap matrix of the molecule
      */
     arma::mat overlap_matrix(m_N, m_N);
-
+    auto start = std::chrono::high_resolution_clock::now();
     // N x N matrix
     for (int i = 0; i < m_N; i++) {
         // Matrix is symmetric
@@ -52,22 +53,29 @@ void Molecule::calculate_overlap_matrix() {
             overlap_matrix(j, i) = S_ij;
         }
     }
+    auto stop = std::chrono::high_resolution_clock::now();
     m_S = overlap_matrix;
 
-    //m_S.print("Overlap matrix");
+    m_S.print("Overlap matrix");
+    std::chrono::duration<double, std::milli> duration = stop - start;
+    cout << "Overlap matrix took " << duration.count() << " ms to calculate." << std::endl;
 }
 
 
 void Molecule::calculate_gamma() {
     /* Assemble the gamma matrix for the molecule
      */
+    auto start = std::chrono::high_resolution_clock::now();
     int num_atoms = m_atoms.size();
     for (int i = 0; i < num_atoms; i++) {
         for (int j = 0; j < num_atoms; j++) {
             m_gamma(i, j) = calculate_gamma_AB(m_atoms[i], m_atoms[j]);
         }
     }
-    //m_gamma.print("Gamma matrix");
+    auto stop = std::chrono::high_resolution_clock::now();
+    m_gamma.print("Gamma matrix");
+    std::chrono::duration<double, std::milli> duration = stop - start;
+    cout << "Gamma matrix took " << duration.count() << " ms to calculate." << std::endl;
     return;
 }
 
@@ -92,6 +100,7 @@ void Molecule::perform_SCF() {
     arma::mat p_beta_old = m_p_beta;
     std::cout << "Starting SCF iterations..." << std::endl;
     int iterations = 0;
+    auto start = std::chrono::high_resolution_clock::now();
     do {
         // Copy the density matrix to old
         p_alpha_old = m_p_alpha;
@@ -109,14 +118,17 @@ void Molecule::perform_SCF() {
         iterations++;
     } while((abs((m_p_alpha - p_alpha_old).max()) > tol || abs((m_p_beta - p_beta_old).max()) > tol) && iterations < 1); // Iterate until convergence or maximum number of steps reached
     //std::cout << "After " << iterations << " iterations, SCF is converged to " << tol << std::endl;
-    // m_p_alpha.print("P_alpha");
-    // m_p_beta.print("P_beta");
-    // m_f_alpha.print("F_alpha");
-    // m_f_beta.print("F_beta");
-    // m_epsilon_alpha.print("E_alpha");
-    // m_epsilon_beta.print("E_beta");
-    // m_C_alpha.print("C_alpha");
-    // m_C_beta.print("C_beta");
+    auto stop = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double, std::milli> duration = stop - start;
+    m_p_alpha.print("P_alpha");
+    m_p_beta.print("P_beta");
+    m_f_alpha.print("F_alpha");
+    m_f_beta.print("F_beta");
+    m_epsilon_alpha.print("E_alpha");
+    m_epsilon_beta.print("E_beta");
+    m_C_alpha.print("C_alpha");
+    m_C_beta.print("C_beta");
+    cout << "One iteration of SCF took " << duration.count() << " ms." << std::endl;
 }
 
 void Molecule::calculate_total_energy() {

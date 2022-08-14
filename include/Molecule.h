@@ -40,9 +40,9 @@ class Molecule {
         m_y = arma::mat(m_atoms.size(), m_atoms.size(), arma::fill::zeros);
         calculate_overlap_matrix();
         calculate_gamma();
-        perform_SCF();
-        calculate_total_energy();
-        calculate_analytic_gradient_E();
+        perform_SCF(); //Modified to perform only one iteration of SCF
+        //calculate_total_energy();
+        //calculate_analytic_gradient_E();
         //calculate_analytic_gradient_E_finite_difference();
     }
     //Constructor

@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
 {
 
   if (argc !=2) {
-    printf("usage hw3 filename, for example hw3 example.txt");
+    printf("usage ./final filename, for example ./final example.txt");
     return EXIT_FAILURE;
   }
 
