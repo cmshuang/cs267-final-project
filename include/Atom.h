@@ -111,6 +111,16 @@ class Atom {
         return m_R;
     }
 
+    void set_R(const arma::vec& R) {
+        if (R.size() != 3) {
+            throw std::invalid_argument("R must be a vector of size 3 containing the x, y, and z coordinates of the shell center.");
+        }
+        m_R = R;
+        for (int i = 0; i < m_basis_functions.size(); i++) {
+            m_basis_functions[i].set_R(R);
+        }
+    }
+
     int get_Z() const {
         /* Getter function for atomic number
          */

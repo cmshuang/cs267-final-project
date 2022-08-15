@@ -57,6 +57,13 @@ class BasisFunction {
         m_normalizations.print("normalization constants");
     }
 
+    void set_R(const arma::vec& R) {
+        if (R.size() != 3) {
+            throw std::invalid_argument("R must be a vector of size 3 containing the x, y, and z coordinates of the shell center.");
+        }
+        m_R = R;
+    }
+
     string get_name() const {
         /* Getter function for orbital name
          */
