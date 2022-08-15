@@ -48,6 +48,23 @@ int main(int argc, char* argv[])
     std::cerr << err.what() << std::endl;
     return EXIT_FAILURE;
   }
+
+  arma::sp_mat sparse_test(5, 5);
+
+  sparse_test(0, 3) = 7;
+  sparse_test(1, 3) = 5;
+  sparse_test(1, 4) = 9;
+  sparse_test(2, 3) = 10;
+
+  sparse_test.print("test");
+
+  std::cout << sparse_test(0, 0) << std::endl;
+
+  for (arma::sp_mat::const_iterator it = sparse_test.begin(); it != sparse_test.end(); ++it) {
+    int i = it.row();
+    int j = it.col();
+    std::cout << *it << " i " << i << " j " << j << std::endl;
+  }
   
   return EXIT_SUCCESS;
 }

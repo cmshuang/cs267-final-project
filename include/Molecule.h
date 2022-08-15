@@ -28,7 +28,7 @@ class Molecule {
         // for (int i = 0; i < m_N; i++) {
         //     m_all_basis_functions[i]->print_info();
         // }
-        arma::mat p_initialization(m_N, m_N, arma::fill::zeros);
+        arma::sp_mat p_initialization(m_N, m_N);
         m_p_alpha = p_initialization;
         m_p_beta = p_initialization;
 
@@ -173,13 +173,13 @@ class Molecule {
         return m_gamma;
     }
 
-    arma::mat get_S() const {
+    arma::sp_mat get_S() const {
         /* Getter function for overlap matrix
          */
         return m_S;
     }
 
-    arma::mat get_H() const {
+    arma::sp_mat get_H() const {
         /* Getter function for core Hamiltonian
          */
         return m_H;
@@ -221,14 +221,14 @@ class Molecule {
     arma::mat m_x;
     arma::mat m_y;
     arma::mat m_gamma;
-    arma::mat m_S;
-    arma::mat m_H;
+    arma::sp_mat m_S;
+    arma::sp_mat m_H;
     arma::mat m_C_alpha;
     arma::mat m_C_beta;
-    arma::mat m_f_alpha;
-    arma::mat m_f_beta;
-    arma::mat m_p_alpha;
-    arma::mat m_p_beta;
+    arma::sp_mat m_f_alpha;
+    arma::sp_mat m_f_beta;
+    arma::sp_mat m_p_alpha;
+    arma::sp_mat m_p_beta;
     arma::vec m_p_tot_atom;
     arma::vec m_epsilon_alpha;
     arma::vec m_epsilon_beta;

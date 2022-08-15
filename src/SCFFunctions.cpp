@@ -174,15 +174,19 @@ double compute_S_ab(const arma::vec& R_a, const arma::vec& R_b, const arma::vec&
     return S_ab;
 }
 
-arma::mat calculate_fock_matrix(const std::vector<BasisFunction*>& basis_functions, const arma::mat& S, const arma::mat& p, const std::vector<Atom>& atoms, const arma::vec& p_tot_atom, const arma::mat& gamma) {
+arma::sp_mat calculate_fock_matrix(const std::vector<BasisFunction*>& basis_functions, const arma::sp_mat& S, const arma::sp_mat& p, const std::vector<Atom>& atoms, const arma::vec& p_tot_atom, const arma::mat& gamma) {
     /* Compute CNDO/2 Fock operator given the AOs, the overlap matrix, the total density matrix, the atoms, the atomwise density vector, and the gamma matrix of the molecule
      */
     assert(basis_functions.size() == S.n_rows  && S.n_rows == S.n_cols && S.n_cols == p.n_rows && p.n_rows == p.n_cols); // S and p should be same shape - N x N, where N is the number of AOs
     assert(atoms.size() == p_tot_atom.n_elem  && p_tot_atom.n_elem == gamma.n_rows && gamma.n_rows == gamma.n_cols); // shape of p_tot should be num_atoms x 1 and shape of gamma should be num_atoms x num_atoms
     int N = basis_functions.size();
     int num_atoms = atoms.size();
-    arma::mat f(N, N);
+    arma::sp_mat f(N, N);
 
+    for (arma::sp_mat::const_iterator it = S.begin(); it != S.end(); ++it) {
+        int i = it.row();
+        int j = it.col();
+    }
     // Iterate through the AO basis
     for (int i = 0; i < N; i++) {
         for (int j = i; j < N; j++) {
@@ -196,15 +200,15 @@ arma::mat calculate_fock_matrix(const std::vector<BasisFunction*>& basis_functio
                 f(i, j) = -CNDO_param_map[omega_i->get_name()] + ((p_tot_atom(A->get_index()) - (double)A->get_Z_val()) - (p(i, i) - 0.5)) * gamma(A->get_index(), A->get_index());
                 for (int k = 0; k < num_atoms; k++) {
                     if (k != A->get_index()) {
-                        f(i, j) += (p_tot_atom(k) - atoms[k].get_Z_val()) * gamma(A->get_index(), k);
+                        f(j, i) += (p_tot_atom(k) - atoms[k].get_Z_val()) * gamma(A->get_index(), k);
                     }
                 }
             }
             // Calculation for off-diagonal elements (see eq 1.5 in hw 4 pdf)
             else {
                 double fock_element = -0.5 * (CNDO_beta_param_map[A->get_Z()] + CNDO_beta_param_map[B->get_Z()]) * S(i, j) - p(i, j) * gamma(A->get_index(), B->get_index());
-                f(i, j) = fock_element;
                 f(j, i) = fock_element;
+                f(i, j) = fock_element;
             }
         }
     }
@@ -212,12 +216,12 @@ arma::mat calculate_fock_matrix(const std::vector<BasisFunction*>& basis_functio
     return f;
 }
 
-arma::mat calculate_density_matrix(const arma::mat& C, int num_lowest) {
+arma::sp_mat calculate_density_matrix(const arma::mat& C, int num_lowest) {
     /* Compute density matrix p given the MO coefficient matrix and the number of lowest energy orbitals to occupy
      */
     assert (C.n_rows == C.n_cols); // C should be a square matrix
     int N = C.n_rows;
-    arma::mat p(N, N, arma::fill::zeros);
+    arma::sp_mat p(N, N);
     // See eq. 1.1 and 1.2 in hw 4 pdf
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < N; j++) {
