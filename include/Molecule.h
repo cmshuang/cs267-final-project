@@ -32,6 +32,9 @@ class Molecule {
         m_p_alpha = p_initialization;
         m_p_beta = p_initialization;
 
+        m_f_alpha = p_initialization;
+        m_f_beta = p_initialization;
+
         m_p_tot_atom = arma::vec(m_atoms.size(), arma::fill::zeros);
         m_gamma = arma::mat(m_atoms.size(), m_atoms.size(), arma::fill::zeros);
 

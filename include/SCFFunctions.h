@@ -23,7 +23,9 @@ double compute_S_ab_x(const double& alpha, const double& beta, const double& pre
 double compute_S_ab(const arma::vec& R_a, const arma::vec& R_b, const arma::vec& momentum_a, const arma::vec& momentum_b, const double& alpha, const double& beta);
 double calculate_gamma_AB(Atom A, Atom B);
 arma::sp_mat calculate_fock_matrix(const std::vector<BasisFunction*>& basis_functions, const arma::sp_mat& S, const arma::sp_mat& p, const std::vector<Atom>& atoms, const arma::vec& p_tot_atom, const arma::mat& gamma);
-arma::sp_mat calculate_density_matrix(const arma::mat& C, int num_lowest);
+void calculate_fock_matrix(arma::sp_mat& f, const std::vector<BasisFunction*>& basis_functions, const arma::sp_mat& S, const arma::sp_mat& p, const std::vector<Atom>& atoms, const arma::vec& p_tot_atom, const arma::mat& gamma);
+arma::sp_mat calculate_density_matrix(const arma::mat& C, const arma::sp_mat& S, int num_lowest);
+void calculate_density_matrix(arma::sp_mat& p, const arma::mat& C, const arma::sp_mat& S, int num_lowest);
 double compute_dS_ab_dXa(const arma::vec& R_a, const arma::vec& R_b, const arma::vec& momentum_a, const arma::vec& momentum_b, const double& alpha, const double& beta, const int& dim);
 arma::mat calculate_overlap_gradient_matrix_Xa(const std::vector<BasisFunction*>& basis_functions, const int& atom_index, const int& dim);
 double calculate_dgamma_AB_dXa(Atom A, Atom B, const int& dim);

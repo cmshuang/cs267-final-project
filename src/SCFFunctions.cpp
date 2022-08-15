@@ -183,10 +183,6 @@ arma::sp_mat calculate_fock_matrix(const std::vector<BasisFunction*>& basis_func
     int num_atoms = atoms.size();
     arma::sp_mat f(N, N);
 
-    for (arma::sp_mat::const_iterator it = S.begin(); it != S.end(); ++it) {
-        int i = it.row();
-        int j = it.col();
-    }
     // Iterate through the AO basis
     for (int i = 0; i < N; i++) {
         for (int j = i; j < N; j++) {
@@ -216,22 +212,130 @@ arma::sp_mat calculate_fock_matrix(const std::vector<BasisFunction*>& basis_func
     return f;
 }
 
-arma::sp_mat calculate_density_matrix(const arma::mat& C, int num_lowest) {
+void calculate_fock_matrix(arma::sp_mat& f, const std::vector<BasisFunction*>& basis_functions, const arma::sp_mat& S, const arma::sp_mat& p, const std::vector<Atom>& atoms, const arma::vec& p_tot_atom, const arma::mat& gamma) {
+    /* Compute CNDO/2 Fock operator given the AOs, the overlap matrix, the total density matrix, the atoms, the atomwise density vector, and the gamma matrix of the molecule
+     */
+    assert(basis_functions.size() == S.n_rows  && S.n_rows == S.n_cols && S.n_cols == p.n_rows && p.n_rows == p.n_cols); // S and p should be same shape - N x N, where N is the number of AOs
+    assert(atoms.size() == p_tot_atom.n_elem  && p_tot_atom.n_elem == gamma.n_rows && gamma.n_rows == gamma.n_cols); // shape of p_tot should be num_atoms x 1 and shape of gamma should be num_atoms x num_atoms
+    int N = basis_functions.size();
+    int num_atoms = atoms.size();
+    // arma::umat locations(2, N);
+    // arma::vec values(N);
+    // //arma::sp_mat f(N, N);
+    // int locations_i = 0;
+    // for (arma::sp_mat::const_iterator it = S.begin(); it != S.end(); ++it) {
+    //     int i = it.row();
+    //     int j = it.col();
+    //     BasisFunction* omega_i = basis_functions[i];
+    //     BasisFunction* omega_j = basis_functions[j];
+    //     Atom* A = omega_i->get_atom();
+    //     Atom* B = omega_j->get_atom();
+    //     assert(A != nullptr && B != nullptr);
+    //     // Calculation for diagonal elements (see eq 1.4 in hw 4 pdf)
+    //     if (i == j) {
+    //         double result = -CNDO_param_map[omega_i->get_name()] + ((p_tot_atom(A->get_index()) - (double)A->get_Z_val()) - (p(i, i) - 0.5)) * gamma(A->get_index(), A->get_index());
+    //         for (int k = 0; k < num_atoms; k++) {
+    //             if (k != A->get_index()) {
+    //                 result += (p_tot_atom(k) - atoms[k].get_Z_val()) * gamma(A->get_index(), k);
+    //             }
+    //         }
+    //         locations(0,locations_i) = i;
+    //         locations(1,locations_i) = j;
+    //         values(locations_i) = result;
+    //     }
+    //     // Calculation for off-diagonal elements (see eq 1.5 in hw 4 pdf)
+    //     else {
+    //         double fock_element = -0.5 * (CNDO_beta_param_map[A->get_Z()] + CNDO_beta_param_map[B->get_Z()]) * (*it) - p(i, j) * gamma(A->get_index(), B->get_index());
+    //         f(i, j) = fock_element;
+    //         f(j, i) = fock_element;
+    //     }
+    //     locations_i++;
+    // }
+
+    // Iterate through the AO basis
+    for (int i = 0; i < N; i++) {
+        for (int j = i; j < N; j++) {
+            BasisFunction* omega_i = basis_functions[i];
+            BasisFunction* omega_j = basis_functions[j];
+            Atom* A = omega_i->get_atom();
+            Atom* B = omega_j->get_atom();
+            assert(A != nullptr && B != nullptr);
+            // Calculation for diagonal elements (see eq 1.4 in hw 4 pdf)
+            if (i == j) {
+                double result = -CNDO_param_map[omega_i->get_name()] + ((p_tot_atom(A->get_index()) - (double)A->get_Z_val()) - (p(i, i) - 0.5)) * gamma(A->get_index(), A->get_index());
+                for (int k = 0; k < num_atoms; k++) {
+                    if (k != A->get_index()) {
+                        result += (p_tot_atom(k) - atoms[k].get_Z_val()) * gamma(A->get_index(), k);
+                    }
+                }
+                f(i, j) = result;
+            }
+            // Calculation for off-diagonal elements (see eq 1.5 in hw 4 pdf)
+            else {
+                double fock_element = -0.5 * (CNDO_beta_param_map[A->get_Z()] + CNDO_beta_param_map[B->get_Z()]) * S(i, j) - p(i, j) * gamma(A->get_index(), B->get_index());
+                f(j, i) = fock_element;
+                f(i, j) = fock_element;
+            }
+        }
+    }
+
+    return;
+}
+
+arma::sp_mat calculate_density_matrix(const arma::mat& C, const arma::sp_mat& S, int num_lowest) {
     /* Compute density matrix p given the MO coefficient matrix and the number of lowest energy orbitals to occupy
      */
     assert (C.n_rows == C.n_cols); // C should be a square matrix
     int N = C.n_rows;
     arma::sp_mat p(N, N);
+    //umat()
+    // See eq. 1.1 and 1.2 in hw 4 pdf
+    for (arma::sp_mat::const_iterator it = S.begin(); it != S.end(); ++it) {
+        int i = it.row();
+        int j = it.col();
+        double result = 0.;
+        for (int k = 0; k < num_lowest; k++) {
+            result += C(i, k) * C(j, k);
+        }
+        p(i, j) = result;
+    }
+
+    return p;
+}
+
+void calculate_density_matrix(arma::sp_mat& p, const arma::mat& C, const arma::sp_mat& S, int num_lowest) {
+    /* Compute density matrix p given the MO coefficient matrix and the number of lowest energy orbitals to occupy
+     */
+    assert (C.n_cols==C.n_rows);
+    int N = S.n_rows;
+    double tol = 1E-7;
+    arma::mat C_truncated = (C.submat(0, 0, C.n_rows - 1, num_lowest -1)).t();
+    //arma::sp_mat p(N, N);
+    //umat()
+    // See eq. 1.1 and 1.2 in hw 4 pdf
+    // for (arma::sp_mat::const_iterator it = S.begin(); it != S.end(); ++it) {
+    //     int i = it.row();
+    //     int j = it.col();
+    //     double result = 0.;
+    //     for (int k = 0; k < num_lowest; k++) {
+    //         result += C(i, k) * C(j, k);
+    //     }
+    //     p(i, j) = result;
+    // }
+    arma::sp_mat p_init(N, N);
+    p = p_init;
     // See eq. 1.1 and 1.2 in hw 4 pdf
     for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
-            for (int k = 0; k < num_lowest; k++) {
-                p(i, j) += C(i, k) * C(j, k);
+        for (int j = i; j < N; j++) {
+            double result = dot(C_truncated.col(i), C_truncated.col(j));
+            if (abs(result) > tol) {
+                p(i, j) = result;
+                p(j, i) = result;
             }
         }
     }
 
-    return p;
+    return;
 }
 
 double calculate_gamma_AB(Atom A, Atom B) {

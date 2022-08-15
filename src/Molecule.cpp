@@ -56,7 +56,7 @@ void Molecule::calculate_overlap_matrix() {
     auto stop = std::chrono::high_resolution_clock::now();
     m_S = overlap_matrix;
 
-    m_S.print("Overlap matrix");
+    arma::mat(m_S).print("Overlap matrix");
     std::chrono::duration<double, std::milli> duration = stop - start;
     cout << "Overlap matrix took " << duration.count() << " ms to calculate." << std::endl;
 }
@@ -113,18 +113,24 @@ void Molecule::perform_SCF() {
         p_beta_old = m_p_beta;
         // Calculate the fock matrices given the density matrices
         start_fock = std::chrono::high_resolution_clock::now();
-        m_f_alpha = calculate_fock_matrix(m_all_basis_functions, m_S, m_p_alpha, m_atoms, m_p_tot_atom, m_gamma);
-        m_f_beta = calculate_fock_matrix(m_all_basis_functions, m_S, m_p_beta, m_atoms, m_p_tot_atom, m_gamma);
+        // m_f_alpha = calculate_fock_matrix(m_all_basis_functions, m_S, m_p_alpha, m_atoms, m_p_tot_atom, m_gamma);
+        // m_f_beta = calculate_fock_matrix(m_all_basis_functions, m_S, m_p_beta, m_atoms, m_p_tot_atom, m_gamma);
+        calculate_fock_matrix(m_f_alpha, m_all_basis_functions, m_S, m_p_alpha, m_atoms, m_p_tot_atom, m_gamma);
+        calculate_fock_matrix(m_f_beta, m_all_basis_functions, m_S, m_p_beta, m_atoms, m_p_tot_atom, m_gamma);
         stop_fock = std::chrono::high_resolution_clock::now();
         // Solve eigenvalue problem to fill MO coefficients and epsilons for alpha and beta
         start_eig = std::chrono::high_resolution_clock::now();
         arma::eig_sym(m_epsilon_alpha, m_C_alpha, arma::mat(m_f_alpha));
         arma::eig_sym(m_epsilon_beta, m_C_beta, arma::mat(m_f_beta));
+        // arma::eigs_sym(m_epsilon_alpha, m_C_alpha, m_f_alpha, m_p,);
+        // arma::eigs_sym(m_epsilon_beta, m_C_beta, m_f_beta, m_q);
         stop_eig = std::chrono::high_resolution_clock::now();
         //Calculate the new density matrices from the new MO coefficients
         start_density = std::chrono::high_resolution_clock::now();
-        m_p_alpha = calculate_density_matrix(m_C_alpha, m_p);
-        m_p_beta = calculate_density_matrix(m_C_beta, m_q);
+        // m_p_alpha = calculate_density_matrix(m_C_alpha, m_S, m_p);
+        // m_p_beta = calculate_density_matrix(m_C_beta, m_S, m_q);
+        calculate_density_matrix(m_p_alpha, m_C_alpha, m_S, m_p);
+        calculate_density_matrix(m_p_beta, m_C_beta, m_S, m_q);
         stop_density = std::chrono::high_resolution_clock::now();
         calculate_p_tot_atom();
         iterations++;
@@ -132,10 +138,10 @@ void Molecule::perform_SCF() {
     //std::cout << "After " << iterations << " iterations, SCF is converged to " << tol << std::endl;
     auto stop = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double, std::milli> duration = stop - start;
-    m_p_alpha.print("P_alpha");
-    m_p_beta.print("P_beta");
-    m_f_alpha.print("F_alpha");
-    m_f_beta.print("F_beta");
+    arma::mat(m_p_alpha).print("P_alpha");
+    arma::mat(m_p_beta).print("P_beta");
+    arma::mat(m_f_alpha).print("F_alpha");
+    arma::mat(m_f_beta).print("F_beta");
     m_epsilon_alpha.print("E_alpha");
     m_epsilon_beta.print("E_beta");
     m_C_alpha.print("C_alpha");
