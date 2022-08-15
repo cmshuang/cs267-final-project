@@ -101,19 +101,31 @@ void Molecule::perform_SCF() {
     std::cout << "Starting SCF iterations..." << std::endl;
     int iterations = 0;
     auto start = std::chrono::high_resolution_clock::now();
+    std::chrono::time_point<std::chrono::high_resolution_clock> start_fock;
+    std::chrono::time_point<std::chrono::high_resolution_clock> stop_fock;
+    std::chrono::time_point<std::chrono::high_resolution_clock> start_eig;
+    std::chrono::time_point<std::chrono::high_resolution_clock> stop_eig;
+    std::chrono::time_point<std::chrono::high_resolution_clock> start_density;
+    std::chrono::time_point<std::chrono::high_resolution_clock> stop_density;
     do {
         // Copy the density matrix to old
         p_alpha_old = m_p_alpha;
         p_beta_old = m_p_beta;
         // Calculate the fock matrices given the density matrices
+        start_fock = std::chrono::high_resolution_clock::now();
         m_f_alpha = calculate_fock_matrix(m_all_basis_functions, m_S, m_p_alpha, m_atoms, m_p_tot_atom, m_gamma);
         m_f_beta = calculate_fock_matrix(m_all_basis_functions, m_S, m_p_beta, m_atoms, m_p_tot_atom, m_gamma);
+        stop_fock = std::chrono::high_resolution_clock::now();
         // Solve eigenvalue problem to fill MO coefficients and epsilons for alpha and beta
+        start_eig = std::chrono::high_resolution_clock::now();
         arma::eig_sym(m_epsilon_alpha, m_C_alpha, m_f_alpha);
         arma::eig_sym(m_epsilon_beta, m_C_beta, m_f_beta);
+        stop_eig = std::chrono::high_resolution_clock::now();
         //Calculate the new density matrices from the new MO coefficients
+        start_density = std::chrono::high_resolution_clock::now();
         m_p_alpha = calculate_density_matrix(m_C_alpha, m_p);
         m_p_beta = calculate_density_matrix(m_C_beta, m_q);
+        stop_density = std::chrono::high_resolution_clock::now();
         calculate_p_tot_atom();
         iterations++;
     } while((abs((m_p_alpha - p_alpha_old).max()) > tol || abs((m_p_beta - p_beta_old).max()) > tol) && iterations < 1); // Iterate until convergence or maximum number of steps reached
@@ -128,6 +140,12 @@ void Molecule::perform_SCF() {
     m_epsilon_beta.print("E_beta");
     m_C_alpha.print("C_alpha");
     m_C_beta.print("C_beta");
+    std::chrono::duration<double, std::milli> duration_fock = stop_fock - start_fock;
+    cout << "Calculating Fock matrices took " << duration_fock.count() << " ms." << std::endl;
+    std::chrono::duration<double, std::milli> duration_eig = stop_eig - start_eig;
+    cout << "Calculating eigenvalues and eigenvectors took " << duration_eig.count() << " ms." << std::endl;
+    std::chrono::duration<double, std::milli> duration_density = stop_density - start_density;
+    cout << "Calculating density matrices took " << duration_density.count() << " ms." << std::endl;
     cout << "One iteration of SCF took " << duration.count() << " ms." << std::endl;
 }
 
