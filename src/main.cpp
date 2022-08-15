@@ -48,6 +48,11 @@ int main(int argc, char* argv[])
     std::cerr << err.what() << std::endl;
     return EXIT_FAILURE;
   }
+
+  arma::sp_mat sparse_test(5, 5);
+  sparse_test.print("sparse test");
+  sparse_test(0, 3) = 3;
+  sparse_test.print("sparses test");
   
   return EXIT_SUCCESS;
 }

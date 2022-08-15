@@ -181,30 +181,33 @@ arma::mat calculate_fock_matrix(const std::vector<BasisFunction*>& basis_functio
     assert(atoms.size() == p_tot_atom.n_elem  && p_tot_atom.n_elem == gamma.n_rows && gamma.n_rows == gamma.n_cols); // shape of p_tot should be num_atoms x 1 and shape of gamma should be num_atoms x num_atoms
     int N = basis_functions.size();
     int num_atoms = atoms.size();
-    arma::mat f(N, N);
+    arma::mat f(N, N, arma::fill::zeros);
+    double tol = 1E-7;
 
     // Iterate through the AO basis
     for (int i = 0; i < N; i++) {
         for (int j = i; j < N; j++) {
-            BasisFunction* omega_i = basis_functions[i];
-            BasisFunction* omega_j = basis_functions[j];
-            Atom* A = omega_i->get_atom();
-            Atom* B = omega_j->get_atom();
-            assert(A != nullptr && B != nullptr);
-            // Calculation for diagonal elements (see eq 1.4 in hw 4 pdf)
-            if (i == j) {
-                f(i, j) = -CNDO_param_map[omega_i->get_name()] + ((p_tot_atom(A->get_index()) - (double)A->get_Z_val()) - (p(i, i) - 0.5)) * gamma(A->get_index(), A->get_index());
-                for (int k = 0; k < num_atoms; k++) {
-                    if (k != A->get_index()) {
-                        f(i, j) += (p_tot_atom(k) - atoms[k].get_Z_val()) * gamma(A->get_index(), k);
+            if(abs(S(i, j)) > tol) {
+                BasisFunction* omega_i = basis_functions[i];
+                BasisFunction* omega_j = basis_functions[j];
+                Atom* A = omega_i->get_atom();
+                Atom* B = omega_j->get_atom();
+                assert(A != nullptr && B != nullptr);
+                // Calculation for diagonal elements (see eq 1.4 in hw 4 pdf)
+                if (i == j) {
+                    f(i, j) = -CNDO_param_map[omega_i->get_name()] + ((p_tot_atom(A->get_index()) - (double)A->get_Z_val()) - (p(i, i) - 0.5)) * gamma(A->get_index(), A->get_index());
+                    for (int k = 0; k < num_atoms; k++) {
+                        if (k != A->get_index()) {
+                            f(i, j) += (p_tot_atom(k) - atoms[k].get_Z_val()) * gamma(A->get_index(), k);
+                        }
                     }
                 }
-            }
-            // Calculation for off-diagonal elements (see eq 1.5 in hw 4 pdf)
-            else {
-                double fock_element = -0.5 * (CNDO_beta_param_map[A->get_Z()] + CNDO_beta_param_map[B->get_Z()]) * S(i, j) - p(i, j) * gamma(A->get_index(), B->get_index());
-                f(i, j) = fock_element;
-                f(j, i) = fock_element;
+                // Calculation for off-diagonal elements (see eq 1.5 in hw 4 pdf)
+                else {
+                    double fock_element = -0.5 * (CNDO_beta_param_map[A->get_Z()] + CNDO_beta_param_map[B->get_Z()]) * S(i, j) - p(i, j) * gamma(A->get_index(), B->get_index());
+                    f(i, j) = fock_element;
+                    f(j, i) = fock_element;
+                }
             }
         }
     }
