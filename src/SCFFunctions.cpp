@@ -221,12 +221,14 @@ arma::mat calculate_density_matrix(const arma::mat& C, int num_lowest) {
     assert (C.n_rows == C.n_cols); // C should be a square matrix
     int N = C.n_rows;
     arma::mat p(N, N, arma::fill::zeros);
+    arma::mat C_truncated = (C.submat(0, 0, C.n_rows - 1, num_lowest -1)).t();
     // See eq. 1.1 and 1.2 in hw 4 pdf
     for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
-            for (int k = 0; k < num_lowest; k++) {
-                p(i, j) += C(i, k) * C(j, k);
-            }
+        for (int j = i; j < N; j++) {
+            double result = dot(C_truncated.col(i), C_truncated.col(j));
+            p(i, j) = result;
+            p(j, i) = result;
+            
         }
     }
 
