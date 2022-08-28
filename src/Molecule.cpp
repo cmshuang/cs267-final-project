@@ -37,20 +37,23 @@ void Molecule::calculate_overlap_matrix() {
     arma::mat overlap_matrix(m_N, m_N);
     auto start = std::chrono::high_resolution_clock::now();
     // N x N matrix
-    for (int i = 0; i < m_N; i++) {
+     #pragma omp parallel for schedule(dynamic) //Dynamic scheduling bc some iterations skip the entire operation. omp parallel does not allow to start from i=j
+    for (int j = 0; j < m_N; j++) {
         // Matrix is symmetric
-        for (int j = i; j < m_N; j++) {
-            // See hw3 pdf eq 2.5 for formula
-            double S_ij = 0.;
-            BasisFunction* omega_i = m_all_basis_functions[i];
-            BasisFunction* omega_j = m_all_basis_functions[j];
-            for (int k = 0; k < 3; k++) {
-                for (int l = 0; l < 3; l++) {
-                    S_ij += omega_i->get_contractions()[k] * omega_j->get_contractions()[l] * omega_i->get_normalizations()[k] * omega_j->get_normalizations()[l] * compute_S_ab(omega_i->get_R(), omega_j->get_R(), omega_i->get_momentum(), omega_j->get_momentum(), omega_i->get_alphas()[k], omega_j->get_alphas()[l]);
+        for (int i = j; i < m_N; i++) {
+            if (i >= j) {
+                // See hw3 pdf eq 2.5 for formula
+                double S_ij = 0.;
+                BasisFunction* omega_i = m_all_basis_functions[i];
+                BasisFunction* omega_j = m_all_basis_functions[j];
+                for (int k = 0; k < 3; k++) {
+                    for (int l = 0; l < 3; l++) {
+                        S_ij += omega_i->get_contractions()[k] * omega_j->get_contractions()[l] * omega_i->get_normalizations()[k] * omega_j->get_normalizations()[l] * compute_S_ab(omega_i->get_R(), omega_j->get_R(), omega_i->get_momentum(), omega_j->get_momentum(), omega_i->get_alphas()[k], omega_j->get_alphas()[l]);
+                    }
                 }
+                overlap_matrix(i, j) = S_ij;
+                overlap_matrix(j, i) = S_ij;
             }
-            overlap_matrix(i, j) = S_ij;
-            overlap_matrix(j, i) = S_ij;
         }
     }
     auto stop = std::chrono::high_resolution_clock::now();
@@ -67,6 +70,7 @@ void Molecule::calculate_gamma() {
      */
     auto start = std::chrono::high_resolution_clock::now();
     int num_atoms = m_atoms.size();
+    #pragma omp parallel for schedule(dynamic)
     for (int i = 0; i < num_atoms; i++) {
         for (int j = 0; j < num_atoms; j++) {
             m_gamma(i, j) = calculate_gamma_AB(m_atoms[i], m_atoms[j]);
