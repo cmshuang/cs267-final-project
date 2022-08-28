@@ -34,12 +34,12 @@ void Molecule::write_output(const string& filename) {
 void Molecule::calculate_overlap_matrix() {
     /* Compute overlap matrix of the molecule
      */
-    arma::mat overlap_matrix(m_N, m_N);
+    arma::sp_mat overlap_matrix(m_N, m_N);
     auto start = std::chrono::high_resolution_clock::now();
     // N x N matrix
-    for (int i = 0; i < m_N; i++) {
+    for (int j = 0; j < m_N; j++) {
         // Matrix is symmetric
-        for (int j = i; j < m_N; j++) {
+        for (int i = j; i < m_N; i++) {
             // See hw3 pdf eq 2.5 for formula
             double S_ij = 0.;
             BasisFunction* omega_i = m_all_basis_functions[i];
@@ -50,11 +50,10 @@ void Molecule::calculate_overlap_matrix() {
                 }
             }
             overlap_matrix(i, j) = S_ij;
-            overlap_matrix(j, i) = S_ij;
         }
     }
+    m_S = symmatl(overlap_matrix);
     auto stop = std::chrono::high_resolution_clock::now();
-    m_S = overlap_matrix;
 
     arma::mat(m_S).print("Overlap matrix");
     std::chrono::duration<double, std::milli> duration = stop - start;

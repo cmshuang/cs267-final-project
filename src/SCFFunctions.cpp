@@ -223,7 +223,7 @@ void calculate_fock_matrix(arma::sp_mat& f, const std::vector<BasisFunction*>& b
     for (arma::sp_mat::const_iterator it = S.begin(); it != S.end(); ++it) {
         int i = it.row();
         int j = it.col();
-        if (j >= i) {
+        if (i <= j) {
             BasisFunction* omega_i = basis_functions[i];
             BasisFunction* omega_j = basis_functions[j];
             Atom* A = omega_i->get_atom();
@@ -322,15 +322,25 @@ void calculate_density_matrix(arma::sp_mat& p, const arma::mat& C, const arma::s
     arma::sp_mat p_init(N, N);
     p = p_init;
     // See eq. 1.1 and 1.2 in hw 4 pdf
-    for (int i = 0; i < N; i++) {
-        for (int j = i; j < N; j++) {
+    // for (int i = 0; i < N; i++) {
+    //     for (int j = i; j < N; j++) {
+    //         double result = dot(C_truncated.col(i), C_truncated.col(j));
+    //         if (abs(result) > tol) {
+    //             p(i, j) = result;
+    //         }
+    //     }
+    // }
+
+    for (int j = 0; j < N; j++) {
+        for (int i = j; i < N; i++) {
             double result = dot(C_truncated.col(i), C_truncated.col(j));
             if (abs(result) > tol) {
                 p(i, j) = result;
-                p(j, i) = result;
             }
         }
     }
+
+    p = symmatl(p);
 
     return;
 }
