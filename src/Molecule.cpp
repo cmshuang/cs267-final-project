@@ -36,11 +36,12 @@ void Molecule::calculate_overlap_matrix() {
      */
     arma::sp_mat overlap_matrix(m_N, m_N);
     auto start = std::chrono::high_resolution_clock::now();
+    double tol = 1E-7;
     // N x N matrix
-    #pragma omp parallel for collapse(2) schedule(dynamic) //Dynamic scheduling bc some iterations skip the entire operation. omp parallel does not allow to start from i=j
+    #pragma omp parallel for schedule(dynamic) //Dynamic scheduling because number of iterations in inner loop differ
     for (int j = 0; j < m_N; j++) {
         // Matrix is symmetric
-        for (int i = 0; i < m_N; i++) {
+        for (int i = j; i < m_N; i++) {
             // See hw3 pdf eq 2.5 for formula
             if (i >= j) {
                 double S_ij = 0.;
@@ -51,7 +52,8 @@ void Molecule::calculate_overlap_matrix() {
                         S_ij += omega_i->get_contractions()[k] * omega_j->get_contractions()[l] * omega_i->get_normalizations()[k] * omega_j->get_normalizations()[l] * compute_S_ab(omega_i->get_R(), omega_j->get_R(), omega_i->get_momentum(), omega_j->get_momentum(), omega_i->get_alphas()[k], omega_j->get_alphas()[l]);
                     }
                 }
-                overlap_matrix(i, j) = S_ij;
+                if (abs(S_ij) > tol)
+                    overlap_matrix(i, j) = S_ij;
             }
         }
     }
@@ -69,7 +71,7 @@ void Molecule::calculate_gamma() {
      */
     auto start = std::chrono::high_resolution_clock::now();
     int num_atoms = m_atoms.size();
-    #pragma omp parallel for collapse(2) schedule(dynamic)
+    #pragma omp parallel for schedule(dynamic)
     for (int i = 0; i < num_atoms; i++) {
         for (int j = 0; j < num_atoms; j++) {
             m_gamma(i, j) = calculate_gamma_AB(m_atoms[i], m_atoms[j]);

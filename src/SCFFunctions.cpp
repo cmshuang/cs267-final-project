@@ -219,7 +219,8 @@ void calculate_fock_matrix(arma::sp_mat& f, const std::vector<BasisFunction*>& b
     assert(atoms.size() == p_tot_atom.n_elem  && p_tot_atom.n_elem == gamma.n_rows && gamma.n_rows == gamma.n_cols); // shape of p_tot should be num_atoms x 1 and shape of gamma should be num_atoms x num_atoms
     int N = basis_functions.size();
     int num_atoms = atoms.size();
-    // //arma::sp_mat f(N, N);
+    double tol = 1E-7;
+    //arma::sp_mat new_f(N, N);
     //arma::sp_mat::const_iterator is NOT a random access iterator -- cannot be used with openmp. 
     /*
     for (arma::sp_mat::const_iterator it = S.begin(); it < S.end(); ++it) {
@@ -251,9 +252,9 @@ void calculate_fock_matrix(arma::sp_mat& f, const std::vector<BasisFunction*>& b
     }
     */
     //Iterate through the AO basis
-    #pragma omp parallel for collapse(2) schedule(dynamic)
+    #pragma omp parallel for schedule(dynamic, 2)
     for (int j = 0; j < N; j++) {
-        for (int i = 0; i < N; i++) {
+        for (int i = j; i < N; i++) {
             if (S(i, j) != 0 && i >= j) {
                 BasisFunction* omega_i = basis_functions[i];
                 BasisFunction* omega_j = basis_functions[j];
@@ -268,12 +269,14 @@ void calculate_fock_matrix(arma::sp_mat& f, const std::vector<BasisFunction*>& b
                             result += (p_tot_atom(k) - atoms[k].get_Z_val()) * gamma(A->get_index(), k);
                         }
                     }
-                    f(i, j) = result;
+                    if(abs(result) > tol)
+                        f(i, j) = result;
                 }
                 // Calculation for off-diagonal elements (see eq 1.5 in hw 4 pdf)
                 else {
                     double fock_element = -0.5 * (CNDO_beta_param_map[A->get_Z()] + CNDO_beta_param_map[B->get_Z()]) * S(i, j) - p(i, j) * gamma(A->get_index(), B->get_index());
-                    f(i, j) = fock_element;
+                    if(abs(fock_element) > tol)
+                        f(i, j) = fock_element;
                 }
             }
         }
@@ -314,9 +317,9 @@ void calculate_density_matrix(arma::sp_mat& p, const arma::mat& C, const arma::s
     arma::sp_mat p_init(N, N);
     p = p_init;
     // See eq. 1.1 and 1.2 in hw 4 pdf
-    #pragma omp parallel for collapse(2) schedule(dynamic)
+    #pragma omp parallel for schedule(dynamic)
     for (int j = 0; j < N; j++) {
-        for (int i = 0; i < N; i++) {
+        for (int i = j; i < N; i++) {
             if (i >= j) {
                 double result = dot(C_truncated.col(i), C_truncated.col(j));
                 if (abs(result) > tol) {
