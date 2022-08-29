@@ -185,8 +185,8 @@ arma::mat calculate_fock_matrix(const std::vector<BasisFunction*>& basis_functio
     double tol = 1E-7;
 
     // Iterate through the AO basis
-    for (int i = 0; i < N; i++) {
-        for (int j = i; j < N; j++) {
+    for (int j = 0; j < N; j++) {
+        for (int i = j; i < N; i++) {
             if(abs(S(i, j)) > tol) {
                 BasisFunction* omega_i = basis_functions[i];
                 BasisFunction* omega_j = basis_functions[j];
@@ -223,8 +223,8 @@ arma::mat calculate_density_matrix(const arma::mat& C, int num_lowest) {
     arma::mat p(N, N, arma::fill::zeros);
     arma::mat C_truncated = (C.submat(0, 0, C.n_rows - 1, num_lowest -1)).t();
     // See eq. 1.1 and 1.2 in hw 4 pdf
-    for (int i = 0; i < N; i++) {
-        for (int j = i; j < N; j++) {
+    for (int j = 0; j < N; j++) {
+        for (int i = j; i < N; i++) {
             double result = dot(C_truncated.col(i), C_truncated.col(j));
             p(i, j) = result;
             p(j, i) = result;
