@@ -110,6 +110,8 @@ void Molecule::perform_SCF() {
     std::chrono::time_point<std::chrono::high_resolution_clock> stop_eig;
     std::chrono::time_point<std::chrono::high_resolution_clock> start_density;
     std::chrono::time_point<std::chrono::high_resolution_clock> stop_density;
+    std::chrono::time_point<std::chrono::high_resolution_clock> start_p_tot_atom;
+    std::chrono::time_point<std::chrono::high_resolution_clock> stop_p_tot_atom;
     do {
         // Copy the density matrix to old
         p_alpha_old = m_p_alpha;
@@ -129,7 +131,9 @@ void Molecule::perform_SCF() {
         m_p_alpha = calculate_density_matrix(m_C_alpha, m_p);
         m_p_beta = calculate_density_matrix(m_C_beta, m_q);
         stop_density = std::chrono::high_resolution_clock::now();
+        start_p_tot_atom = std::chrono::high_resolution_clock::now();
         calculate_p_tot_atom();
+        stop_p_tot_atom = std::chrono::high_resolution_clock::now();
         iterations++;
     } while((abs((m_p_alpha - p_alpha_old).max()) > tol || abs((m_p_beta - p_beta_old).max()) > tol) && iterations < 1); // Iterate until convergence or maximum number of steps reached
     //std::cout << "After " << iterations << " iterations, SCF is converged to " << tol << std::endl;
@@ -143,12 +147,15 @@ void Molecule::perform_SCF() {
     m_epsilon_beta.print("E_beta");
     m_C_alpha.print("C_alpha");
     m_C_beta.print("C_beta");
+    m_p_tot_atom.print("p_tot_atom");
     std::chrono::duration<double, std::milli> duration_fock = stop_fock - start_fock;
     cout << "Calculating Fock matrices took " << duration_fock.count() << " ms." << std::endl;
     std::chrono::duration<double, std::milli> duration_eig = stop_eig - start_eig;
     cout << "Calculating eigenvalues and eigenvectors took " << duration_eig.count() << " ms." << std::endl;
     std::chrono::duration<double, std::milli> duration_density = stop_density - start_density;
     cout << "Calculating density matrices took " << duration_density.count() << " ms." << std::endl;
+    std::chrono::duration<double, std::milli> duration_p_tot_atom = stop_p_tot_atom - start_p_tot_atom;
+    cout << "Calculating p_tot_atom took " << duration_p_tot_atom.count() << " ms." << std::endl;
     cout << "One iteration of SCF took " << duration.count() << " ms." << std::endl;
 }
 
