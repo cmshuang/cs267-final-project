@@ -82,6 +82,11 @@ class Molecule {
         m_p = num_electrons - m_q;
         std::cout << "p = " << m_p << " q = " << m_q << std::endl;
 
+        m_atom_lock = std::vector<omp_lock_t>(m_atoms.size());
+        for (int i = 0; i < m_atom_lock.size(); i++) {
+            omp_init_lock(&m_atom_lock[i]);
+        }
+
         run();
         //calculate_analytic_gradient_E_finite_difference();
     }
@@ -233,6 +238,7 @@ class Molecule {
     arma::sp_mat m_p_alpha;
     arma::sp_mat m_p_beta;
     arma::vec m_p_tot_atom;
+    std::vector<omp_lock_t> m_atom_lock;
     arma::vec m_epsilon_alpha;
     arma::vec m_epsilon_beta;
     double m_total_energy;
