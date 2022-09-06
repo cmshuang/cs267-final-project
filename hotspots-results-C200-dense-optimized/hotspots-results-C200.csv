@@ -1,0 +1,94 @@
+Function,CPU Time,CPU Time:Effective Time,CPU Time:Effective Time:Idle,CPU Time:Effective Time:Poor,CPU Time:Effective Time:Ok,CPU Time:Effective Time:Ideal,CPU Time:Effective Time:Over,CPU Time:Spin Time,CPU Time:Overhead Time,Module,Function (Full),Source File,Start Address
+sched_yield,146.005315,0.0,0.0,0.0,0.0,0.0,0.0,146.005315,0.0,libc.so.6,sched_yield,[Unknown],0xe3380
+std::ostream::_M_insert<double>,28.425887,28.425887,1.286848,27.139039,0.0,0.0,0.0,0.0,0.0,libstdc++.so.6,std::ostream& std::ostream::_M_insert<double>(double),[Unknown],0x135af0
+pow,23.430154,23.430154,0.0,23.430154,0.0,0.0,0.0,0.0,0.0,libm.so.6,pow,[Unknown],0xbe60
+calculate_gamma_AB,17.503646,17.503646,0.0,17.503646,0.0,0.0,0.0,0.0,0.0,hw5,"calculate_gamma_AB(Atom, Atom)",[Unknown],0x4125d0
+__pthread_mutex_lock,12.175130,0.0,0.0,0.0,0.0,0.0,0.0,12.175130,0.0,libpthread.so.0,__pthread_mutex_lock,[Unknown],0xae80
+func@0x3319f0,10.058772,10.058772,0.0,10.058772,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,func@0x3319f0,[Unknown],0x3319f0
+__memmove_avx512_no_vzeroupper,9.065180,9.065180,0.0,9.065180,0.0,0.0,0.0,0.0,0.0,libc.so.6,__memmove_avx512_no_vzeroupper,[Unknown],0x161520
+dgemm_kernel_HASWELL,3.687105,3.687105,0.0,3.687105,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,dgemm_kernel_HASWELL,[Unknown],0xeb5000
+compute_S_ab_x,3.223894,3.223894,0.0,3.223894,0.0,0.0,0.0,0.0,0.0,hw5,"compute_S_ab_x(double const&, double const&, double const&, double const&, double const&, double const&, double const&, double const&)",[Unknown],0x4122f0
+dsymv_U_HASWELL,2.702712,2.702712,0.0,2.702712,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,dsymv_U_HASWELL,[Unknown],0xeb3c00
+dsyevd_,2.438515,1.793486,0.0,1.793486,0.0,0.0,0.0,0.645030,0.0,liblapack.so.3,dsyevd_,[Unknown],0x1471370
+compute_prefactor,1.943989,1.943989,0.0,1.943989,0.0,0.0,0.0,0.0,0.0,hw5,"compute_prefactor(double const&, double const&, arma::Col<double> const&, arma::Col<double> const&)",[Unknown],0x417500
+exp,1.795990,1.795990,0.0,1.795990,0.0,0.0,0.0,0.0,0.0,libm.so.6,exp,[Unknown],0xc550
+Molecule::calculate_overlap_matrix,1.647952,1.647952,0.0,1.647952,0.0,0.0,0.0,0.0,0.0,hw5,Molecule::calculate_overlap_matrix(void),[Unknown],0x408c40
+ddot_k_HASWELL,1.219712,1.219712,0.0,1.219712,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,ddot_k_HASWELL,[Unknown],0xeb02e0
+__pthread_mutex_unlock_usercnt,1.124537,1.124537,0.0,1.124537,0.0,0.0,0.0,0.0,0.0,libpthread.so.0,__pthread_mutex_unlock_usercnt,[Unknown],0xc610
+combination,1.028069,1.028069,0.0,1.028069,0.0,0.0,0.0,0.0,0.0,hw5,"combination(int, int)",[Unknown],0x4121e0
+erf,0.999970,0.999970,0.0,0.999970,0.0,0.0,0.0,0.0,0.0,libm.so.6,erf,[Unknown],0x2c0f0
+pthread_mutex_unlock,0.986373,0.0,0.0,0.0,0.0,0.0,0.0,0.986373,0.0,libpthread.so.0,pthread_mutex_unlock,[Unknown],0xc700
+arma::arma_ostream::print<double>,0.919967,0.919967,0.056195,0.863772,0.0,0.0,0.0,0.0,0.0,hw5,"void arma::arma_ostream::print<double>(std::ostream&, arma::Mat<double> const&, bool)",[Unknown],0x4052f4
+compute_R_p,0.648022,0.648022,0.0,0.648022,0.0,0.0,0.0,0.0,0.0,hw5,"compute_R_p(double const&, double const&, arma::Col<double> const&, arma::Col<double> const&)",[Unknown],0x417c30
+arma::Mat<double>::init_warm,0.491922,0.491922,0.0,0.491922,0.0,0.0,0.0,0.0,0.0,hw5,"arma::Mat<double>::init_warm(unsigned long long, unsigned long long)",[Unknown],0x40f300
+Molecule::calculate_gamma,0.368024,0.368024,0.0,0.368024,0.0,0.0,0.0,0.0,0.0,hw5,Molecule::calculate_gamma(void),[Unknown],0x409e80
+arma::arma_ostream::print_elem<double>.isra.0,0.367810,0.367810,0.0,0.367810,0.0,0.0,0.0,0.0,0.0,hw5,"void arma::arma_ostream::print_elem<double>(std::ostream&, double const&, bool).isra.0",[Unknown],0x405248
+compute_S_ab,0.364016,0.364016,0.0,0.364016,0.0,0.0,0.0,0.0,0.0,hw5,"compute_S_ab(arma::Col<double> const&, arma::Col<double> const&, arma::Col<double> const&, arma::Col<double> const&, double const&, double const&)",[Unknown],0x417f10
+func@0xeb1f10,0.331917,0.331917,0.0,0.331917,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,func@0xeb1f10,[Unknown],0xeb1f10
+__lll_unlock_wake,0.271638,0.271638,0.0,0.271638,0.0,0.0,0.0,0.0,0.0,libpthread.so.0,__lll_unlock_wake,[Unknown],0x11d40
+func@0x402f80,0.236048,0.236048,0.0,0.236048,0.0,0.0,0.0,0.0,0.0,hw5,func@0x402f80,[Unknown],0x402f80
+dgemv_n_HASWELL,0.209722,0.209722,0.0,0.209722,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,dgemv_n_HASWELL,[Unknown],0xeb2110
+func@0x20a680,0.192280,0.192280,0.0,0.192280,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,func@0x20a680,[Unknown],0x20a680
+dtrmm_kernel_RN_HASWELL,0.181388,0.181388,0.0,0.181388,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,dtrmm_kernel_RN_HASWELL,[Unknown],0xec11c0
+calculate_density_matrix,0.180046,0.180046,0.0,0.180046,0.0,0.0,0.0,0.0,0.0,hw5,"calculate_density_matrix(arma::Mat<double> const&, int)",[Unknown],0x41a7d0
+func@0xec1010,0.177622,0.177622,0.0,0.177622,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,func@0xec1010,[Unknown],0xec1010
+func@0x209600,0.170902,0.170902,0.0,0.170902,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,func@0x209600,[Unknown],0x209600
+dtrmm_outucopy_HASWELL,0.166448,0.166448,0.0,0.166448,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,dtrmm_outucopy_HASWELL,[Unknown],0xed14e0
+"std::__ostream_insert<char, std::char_traits<char>>",0.164074,0.164074,0.0,0.164074,0.0,0.0,0.0,0.0,0.0,libstdc++.so.6,"std::basic_ostream<char, std::char_traits<char>>& std::__ostream_insert<char, std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>>&, char const*, long)",[Unknown],0x1349a0
+func@0xeb3af0,0.135403,0.135403,0.0,0.135403,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,func@0xeb3af0,[Unknown],0xeb3af0
+flt128_printf_fp,0.134072,0.134072,0.022090,0.111982,0.0,0.0,0.0,0.0,0.0,libquadmath.so.0,flt128_printf_fp,[Unknown],0x25080
+func@0xec25a0,0.113145,0.113145,0.0,0.113145,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,func@0xec25a0,[Unknown],0xec25a0
+func@0xeb12c0,0.111906,0.111906,0.0,0.111906,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,func@0xeb12c0,[Unknown],0xeb12c0
+dgemm_incopy_HASWELL,0.108984,0.108984,0.0,0.108984,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,dgemm_incopy_HASWELL,[Unknown],0xebbdb0
+__lll_lock_wait,0.100057,0.0,0.0,0.0,0.0,0.0,0.0,0.100057,0.0,libpthread.so.0,__lll_lock_wait,[Unknown],0x11ca0
+__memset_avx512_no_vzeroupper,0.099854,0.099854,0.0,0.099854,0.0,0.0,0.0,0.0,0.0,libc.so.6,__memset_avx512_no_vzeroupper,[Unknown],0x161c70
+dtrmm_kernel_RT_HASWELL,0.089123,0.089123,0.0,0.089123,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,dtrmm_kernel_RT_HASWELL,[Unknown],0xec2750
+func@0xfc710,0.083075,0.083075,0.0,0.083075,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,func@0xfc710,[Unknown],0xfc710
+dtrmm_ounucopy_HASWELL,0.080082,0.080082,0.0,0.080082,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,dtrmm_ounucopy_HASWELL,[Unknown],0xec9e40
+"std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>::_M_construct<char*>.isra.0",0.080010,0.080010,0.0,0.080010,0.0,0.0,0.0,0.0,0.0,hw5,"void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>::_M_construct<char*>(char*, char*, std::forward_iterator_tag).isra.0",[Unknown],0x408170
+dgemm_itcopy_HASWELL,0.076797,0.076797,0.0,0.076797,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,dgemm_itcopy_HASWELL,[Unknown],0xebc150
+func@0xfc660,0.068304,0.068304,0.0,0.068304,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,func@0xfc660,[Unknown],0xfc660
+calculate_fock_matrix,0.068052,0.068052,0.0,0.068052,0.0,0.0,0.0,0.0,0.0,hw5,"calculate_fock_matrix(std::vector<BasisFunction*, std::allocator<BasisFunction*>> const&, arma::Mat<double> const&, arma::Mat<double> const&, std::vector<Atom, std::allocator<Atom>> const&, arma::Col<double> const&, arma::Mat<double> const&)",[Unknown],0x41ac80
+dgemm_otcopy_HASWELL,0.063108,0.063108,0.0,0.063108,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,dgemm_otcopy_HASWELL,[Unknown],0xebccd0
+operator new,0.060005,0.060005,0.0,0.060005,0.0,0.0,0.0,0.0,0.0,libstdc++.so.6,operator new(unsigned long),[Unknown],0xb0f40
+arma::Col<double>::Col,0.060000,0.060000,0.0,0.060000,0.0,0.0,0.0,0.0,0.0,hw5,arma::Col<double>::Col(arma::Col<double> const&),[Unknown],0x41c4d0
+func@0x208570,0.056372,0.056372,0.0,0.056372,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,func@0x208570,[Unknown],0x208570
+flt128_ais,0.053990,0.053990,0.010003,0.043987,0.0,0.0,0.0,0.0,0.0,libquadmath.so.0,flt128_ais,[Unknown],0x24fa0
+__kernel_standard,0.051988,0.051988,0.0,0.051988,0.0,0.0,0.0,0.0,0.0,libm.so.6,__kernel_standard,[Unknown],0xc6c0
+dtrmm_RNUU,0.051747,0.051747,0.0,0.051747,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,dtrmm_RNUU,[Unknown],0x1f7290
+func@0x8eb0,0.047986,0.047986,0.0,0.047986,0.0,0.0,0.0,0.0,0.0,libm.so.6,func@0x8eb0,[Unknown],0x8eb0
+_int_free,0.039986,0.039986,0.0,0.039986,0.0,0.0,0.0,0.0,0.0,libc.so.6,_int_free,[Unknown],0x84770
+ddot_,0.039928,0.039928,0.0,0.039928,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,ddot_,[Unknown],0x114140
+dtrmm_oltncopy_HASWELL,0.039923,0.039923,0.0,0.039923,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,dtrmm_oltncopy_HASWELL,[Unknown],0xed6b70
+_int_malloc,0.036013,0.036013,0.0,0.036013,0.0,0.0,0.0,0.0,0.0,libc.so.6,_int_malloc,[Unknown],0x85db0
+func@0x403230,0.035994,0.035994,0.0,0.035994,0.0,0.0,0.0,0.0,0.0,hw5,func@0x403230,[Unknown],0x403230
+std::istream::_M_extract<double>,0.032015,0.032015,0.0,0.032015,0.0,0.0,0.0,0.0,0.0,libstdc++.so.6,std::istream& std::istream::_M_extract<double>(double&),[Unknown],0x11ce90
+cfree,0.032001,0.032001,0.0,0.032001,0.0,0.0,0.0,0.0,0.0,libc.so.6,cfree,[Unknown],0x882f0
+BasisFunction::BasisFunction,0.031975,0.031975,0.0,0.031975,0.0,0.0,0.0,0.0,0.0,hw5,BasisFunction::BasisFunction(BasisFunction const&),[Unknown],0x41c610
+clone,0.030000,0.030000,0.0,0.030000,0.0,0.0,0.0,0.0,0.0,libc.so.6,clone,[Unknown],0xfbcc0
+memset,0.030000,0.030000,0.010000,0.020000,0.0,0.0,0.0,0.0,0.0,ld-linux-x86-64.so.2,memset,[Unknown],0x1db70
+func@0x158780,0.027954,0.027954,0.0,0.027954,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,func@0x158780,[Unknown],0x158780
+func@0xeb2070,0.027884,0.027884,0.0,0.027884,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,func@0xeb2070,[Unknown],0xeb2070
+operator delete,0.024001,0.024001,0.0,0.024001,0.0,0.0,0.0,0.0,0.0,libstdc++.so.6,"operator delete(void*, unsigned long)",[Unknown],0xaf220
+func@0xeb2c30,0.023933,0.023933,0.0,0.023933,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,func@0xeb2c30,[Unknown],0xeb2c30
+_IO_vfprintf,0.022001,0.022001,0.0,0.022001,0.0,0.0,0.0,0.0,0.0,libc.so.6,_IO_vfprintf,[Unknown],0x51a50
+arma::arma_ostream::modify_stream<double>,0.020052,0.020052,0.0,0.020052,0.0,0.0,0.0,0.0,0.0,hw5,"long arma::arma_ostream::modify_stream<double>(std::ostream&, double const*, unsigned long long)",[Unknown],0x40f600
+func@0xf71d0,0.020004,0.020004,0.0,0.020004,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,func@0xf71d0,[Unknown],0xf71d0
+func@0x157d40,0.019838,0.019838,0.0,0.019838,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,func@0x157d40,[Unknown],0x157d40
+func@0x402fb0,0.015995,0.015995,0.0,0.015995,0.0,0.0,0.0,0.0,0.0,hw5,func@0x402fb0,[Unknown],0x402fb0
+_ZSt7getlineIcSt11char_traitsIcESaIcEERSt13basic_istreamIT_T0_ES7_RNSt7__cxx1112basic_stringIS4_S5_T1_EES4_,0.012987,0.012987,0.0,0.012987,0.0,0.0,0.0,0.0,0.0,libstdc++.so.6,_ZSt7getlineIcSt11char_traitsIcESaIcEERSt13basic_istreamIT_T0_ES7_RNSt7__cxx1112basic_stringIS4_S5_T1_EES4_,[Unknown],0xc91a0
+dgemv_t_HASWELL,0.012071,0.012071,0.0,0.012071,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,dgemv_t_HASWELL,[Unknown],0xeb2df0
+func@0x158230,0.012067,0.012067,0.0,0.012067,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,func@0x158230,[Unknown],0x158230
+BasisFunction::~BasisFunction,0.012003,0.012003,0.0,0.012003,0.0,0.0,0.0,0.0,0.0,hw5,BasisFunction::~BasisFunction(void),[Unknown],0x40f100
+"std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>::_M_construct<char*>.isra.0",0.012002,0.012002,0.0,0.012002,0.0,0.0,0.0,0.0,0.0,hw5,"void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>::_M_construct<char*>(char*, char*, std::forward_iterator_tag).isra.0",[Unknown],0x411730
+func@0xeb2d70,0.011898,0.011898,0.0,0.011898,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,func@0xeb2d70,[Unknown],0xeb2d70
+dgemv_n_HASWELL,0.011886,0.011886,0.0,0.011886,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,dgemv_n_HASWELL,[Unknown],0xeb2110
+pthread_cond_wait,0.010000,0.0,0.0,0.0,0.0,0.0,0.0,0.010000,0.0,libpthread.so.0,pthread_cond_wait,[Unknown],0xe700
+"std::getline<char, std::char_traits<char>, std::allocator<char>>",0.009015,0.009015,0.0,0.009015,0.0,0.0,0.0,0.0,0.0,libstdc++.so.6,"std::basic_istream<char, std::char_traits<char>>& std::getline<char, std::char_traits<char>, std::allocator<char>>(std::basic_istream<char, std::char_traits<char>>&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>&, char)",[Unknown],0xc91a0
+[Outside any known module],0.008839,0.008839,0.0,0.008839,0.0,0.0,0.0,0.0,0.0,[Unknown],[Outside any known module],[Unknown],0x0
+dgemm_oncopy_HASWELL,0.008099,0.008099,0.0,0.008099,0.0,0.0,0.0,0.0,0.0,liblapack.so.3,dgemm_oncopy_HASWELL,[Unknown],0xebc600
+func@0x96c0,0.007999,0.007999,0.0,0.007999,0.0,0.0,0.0,0.0,0.0,libarmadillo.so.11,func@0x96c0,[Unknown],0x96c0
+func@0x23990,0.007999,0.007999,0.0,0.007999,0.0,0.0,0.0,0.0,0.0,libc.so.6,func@0x23990,[Unknown],0x23990
+flt128_printf_fp,0.007976,0.007976,0.0,0.007976,0.0,0.0,0.0,0.0,0.0,libquadmath.so.0,flt128_printf_fp,[Unknown],0x25080
+func@0x4032b0,0.007961,0.007961,0.0,0.007961,0.0,0.0,0.0,0.0,0.0,hw5,func@0x4032b0,[Unknown],0x4032b0
+func@0x23b70,0.007950,0.007950,0.0,0.007950,0.0,0.0,0.0,0.0,0.0,libc.so.6,func@0x23b70,[Unknown],0x23b70

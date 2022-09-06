@@ -1,0 +1,7 @@
+685 [23456123832064] INFO mrtehelpers.mrteenv <> - Product libs directory: /global/common/cori_cle7/software/intel/parallel_studio_xe_2020_update3_cluster_edition/vtune_profiler_2020.3.0.612611/lib64
+686 [23456123832064] INFO mrtehelpers.mrteenv <> - File mask: amplxe_tpssmrte_clrprof*
+810 [23456123832064] INFO mrtehelpers.mrteenv <> - File name: lib
+811 [23456123832064] INFO mrtehelpers.mrteenv <> - File mask: amplxe_tpssmrte_clrprof*
+861 [23456123832064] INFO mrtehelpers.mrteenv <> - File name: lib
+867 [23456123832064] ERROR mrtehelpers.mrteenv <> - Failed to init shared librarylib located at /global/common/cori_cle7/software/intel/parallel_studio_xe_2020_update3_cluster_edition/vtune_profiler_2020.3.0.612611/lib64, at file: vcs/mrtehelpers3/src/mrteenv/mrte_profiling_initializer.cpp:485
+867 [23456123832064] ERROR mrtehelpers.mrteenv <> - CLR support is disabled because profiler GUID is empty, at file: vcs/mrtehelpers3/src/mrteenv/mrte_profiling_initializer.cpp:308

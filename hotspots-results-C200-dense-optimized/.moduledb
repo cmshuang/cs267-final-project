@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<bag>
+ <module name="pinbin" md5sum="8b3dc1af1a91bb588fc329b0fe947787" path="/global/common/cori_cle7/software/intel/parallel_studio_xe_2020_update3_cluster_edition/vtune_profiler_2020.3.0.612611/bin64/pinbin"/>
+ <module name="libtpsstool.so" md5sum="8e8fa78ac22b054095c84313dfc80fca" path="/global/common/cori_cle7/software/intel/parallel_studio_xe_2020_update3_cluster_edition/vtune_profiler_2020.3.0.612611/lib64/libtpsstool.so"/>
+ <module name="libc-dynamic.so" md5sum="f33ab968f779c00e7b12e8df84d77c3e" path="/global/common/cori_cle7/software/intel/parallel_studio_xe_2020_update3_cluster_edition/vtune_profiler_2020.3.0.612611/lib64/pinruntime/libc-dynamic.so"/>
+ <module name="libm-dynamic.so" md5sum="13d6087ab0d8bd5fccc9ca1d4e6d92fa" path="/global/common/cori_cle7/software/intel/parallel_studio_xe_2020_update3_cluster_edition/vtune_profiler_2020.3.0.612611/lib64/pinruntime/libm-dynamic.so"/>
+ <module name="libpin3dwarf.so" md5sum="11c72a83fb90b58c8a5c6a8466077a39" path="/global/common/cori_cle7/software/intel/parallel_studio_xe_2020_update3_cluster_edition/vtune_profiler_2020.3.0.612611/lib64/pinruntime/libpin3dwarf.so"/>
+ <module name="libstlport-dynamic.so" md5sum="62e8f210bf2d29061ca2770358029316" path="/global/common/cori_cle7/software/intel/parallel_studio_xe_2020_update3_cluster_edition/vtune_profiler_2020.3.0.612611/lib64/pinruntime/libstlport-dynamic.so"/>
+ <module name="libunwind-dynamic.so" md5sum="6522411d27801136c15477f08e9c4620" path="/global/common/cori_cle7/software/intel/parallel_studio_xe_2020_update3_cluster_edition/vtune_profiler_2020.3.0.612611/lib64/pinruntime/libunwind-dynamic.so"/>
+ <module name="libxed.so" md5sum="d7f25359097e6395292c8c8f3656e1de" path="/global/common/cori_cle7/software/intel/parallel_studio_xe_2020_update3_cluster_edition/vtune_profiler_2020.3.0.612611/lib64/pinruntime/libxed.so"/>
+ <module name="linker" md5sum="a3f866012841be02022ac2cbf891a803" path="/global/common/cori_cle7/software/intel/parallel_studio_xe_2020_update3_cluster_edition/vtune_profiler_2020.3.0.612611/lib64/pinruntime/linker"/>
+ <module name="hw5" md5sum="c7ca41e5b4d8c16c83d3cc0cd15d9848" path="/global/cscratch1/sd/ahou/cs267-final-project/hw5"/>
+ <module name="libarmadillo.so.11" md5sum="5782ccc8de0abab1b649f01fbff2a3b4" path="/global/homes/a/ahou/packages/lib64/libarmadillo.so.11"/>
+ <module name="libarmadillo.so.11.1.1" md5sum="5782ccc8de0abab1b649f01fbff2a3b4" path="/global/u1/a/ahou/packages/lib64/libarmadillo.so.11.1.1"/>
+ <module name="ld-2.26.so" md5sum="65f4385d46bb12ae85f53dcb1dfefeb2" path="/lib64/ld-2.26.so"/>
+ <module name="ld-linux-x86-64.so.2" md5sum="65f4385d46bb12ae85f53dcb1dfefeb2" path="/lib64/ld-linux-x86-64.so.2"/>
+ <module name="libc-2.26.so" md5sum="68cb28ec990d1d7111210b1fad1071d2" path="/lib64/libc-2.26.so"/>
+ <module name="libc.so.6" md5sum="68cb28ec990d1d7111210b1fad1071d2" path="/lib64/libc.so.6"/>
+ <module name="libdl-2.26.so" md5sum="0e6c90ddf1a1ce093f9b79018fa149b0" path="/lib64/libdl-2.26.so"/>
+ <module name="libdl.so.2" md5sum="0e6c90ddf1a1ce093f9b79018fa149b0" path="/lib64/libdl.so.2"/>
+ <module name="libm-2.26.so" md5sum="3f0cec12b3921280f65690ae4f343fa3" path="/lib64/libm-2.26.so"/>
+ <module name="libm.so.6" md5sum="3f0cec12b3921280f65690ae4f343fa3" path="/lib64/libm.so.6"/>
+ <module name="libpthread-2.26.so" md5sum="3567c2e161fcb84b531a07cc298e7481" path="/lib64/libpthread-2.26.so"/>
+ <module name="libpthread.so.0" md5sum="3567c2e161fcb84b531a07cc298e7481" path="/lib64/libpthread.so.0"/>
+ <module name="libgcc_s.so.1" md5sum="c8d340be5e4ee6e08b2138f481beb408" path="/opt/gcc/11.2.0/snos/lib64/libgcc_s.so.1"/>
+ <module name="libgomp.so.1" md5sum="efebdad064d454cec2109661c76919e6" path="/opt/gcc/11.2.0/snos/lib64/libgomp.so.1"/>
+ <module name="libgomp.so.1.0.0" md5sum="efebdad064d454cec2109661c76919e6" path="/opt/gcc/11.2.0/snos/lib64/libgomp.so.1.0.0"/>
+ <module name="libquadmath.so.0" md5sum="26a1bd3cc3602fd2bc322df6120dfaab" path="/opt/gcc/11.2.0/snos/lib64/libquadmath.so.0"/>
+ <module name="libquadmath.so.0.0.0" md5sum="26a1bd3cc3602fd2bc322df6120dfaab" path="/opt/gcc/11.2.0/snos/lib64/libquadmath.so.0.0.0"/>
+ <module name="libstdc++.so.6" md5sum="3c157306aae0ffd31c8b73d1413622cf" path="/opt/gcc/11.2.0/snos/lib64/libstdc++.so.6"/>
+ <module name="libstdc++.so.6.0.29" md5sum="3c157306aae0ffd31c8b73d1413622cf" path="/opt/gcc/11.2.0/snos/lib64/libstdc++.so.6.0.29"/>
+ <module name="libmkl_rt.so" md5sum="7c2cf410bfe8a5e36d74a0591995f379" path="/opt/intel/compilers_and_libraries_2020.2.254/linux/mkl/lib/intel64/libmkl_rt.so"/>
+ <module name="libmkl_rt.so" md5sum="7c2cf410bfe8a5e36d74a0591995f379" path="/opt/intel/compilers_and_libraries_2020.2.254/linux/mkl/lib/intel64_lin/libmkl_rt.so"/>
+ <module name="libgfortran.so.4" md5sum="b5656dc7a51cc7b5baeac06deb446f78" path="/usr/lib64/libgfortran.so.4"/>
+ <module name="libgfortran.so.4.0.0" md5sum="b5656dc7a51cc7b5baeac06deb446f78" path="/usr/lib64/libgfortran.so.4.0.0"/>
+ <module name="liblapack.so.3" md5sum="d01d2e4e1c88b97c6b81e180be6499e8" path="/usr/lib64/liblapack.so.3"/>
+ <module name="libopenblas_pthreads.so.0" md5sum="d01d2e4e1c88b97c6b81e180be6499e8" path="/usr/lib64/libopenblas_pthreads.so.0"/>
+</bag>
